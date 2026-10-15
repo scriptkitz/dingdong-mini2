@@ -1,0 +1,9 @@
+#set(CURL_INCLUDE_DIRS ${A113X_USR_PATH}/include)
+set(CURL_LIBRARIES "-lcurl -lcrypto -lz")
+
+FIND_PATH(CURL_INCLUDE_DIR curl/curl.h ${CMAKE_SYSROOT}/usr)
+FIND_LIBRARY(CURL_LIBRARY libcurl.so ${CMAKE_SYSROOT}/usr)
+
+if (CURL_INCLUDE_DIR AND CURL_LIBRARY)
+    set(CURL_FIND TRUE)
+endif()

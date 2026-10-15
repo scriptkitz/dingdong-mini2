@@ -1,0 +1,46 @@
+diff -ruN smartSpeakerApp/src/evsClient.js smartSpeakerApp_uart/src/evsClient.js
+--- smartSpeakerApp/src/evsClient.js	2020-03-13 11:21:37.711451017 +0800
++++ smartSpeakerApp_uart/src/evsClient.js	2020-03-13 11:07:54.787812870 +0800
+@@ -3,6 +3,7 @@
+ var EasyCurl = require('curl');
+ var WebSocket = require('websocket').Websocket;
+ var logger = require('logger').getLogger('Client');
++var uart = require('iflyos_uart').getUart();
+ 
+ /**
+  * @class EVSClient
+@@ -28,6 +29,10 @@
+         this.deviceId = deviceId;
+         this.escapedId = EasyCurl.escape(deviceId);
+         this.serviceUrl = undefined;
++        // this.uart = new Uart();
++        uart.init("/dev/ttyS1", 9600);
++        this._onUartRecv = this._onUartRecvMsg.bind(this);
++        uart.on("recv", this._onUartRecv);
+ 
+         this.initPromises = [];
+         this.cxtMgr = cxtMgr;
+@@ -139,6 +144,11 @@
+         this.ws.connect(host, port, path);
+     }
+ 
++    _onUartRecvMsg(buf) {
++        var msg = buf.toString();
++        logger.info("lional recv uart msg = ", msg);
++    }
++
+     _onWsOpen(){
+         this.connected = true;
+         this.emit('connected');
+@@ -156,6 +166,11 @@
+         var str = message.toString();
+         logger.info("<", str);
+         var reply = JSON.parse(str);
++        // TODO 
++        var buf = new Buffer(str);
++        logger.info("lional send uart msg");
++        uart.send(buf);
++        //
+         if(this._willDrop(reply.iflyos_meta))
+         {
+             logger.info('drop responses for old request id', reply.iflyos_meta.request_id, str);

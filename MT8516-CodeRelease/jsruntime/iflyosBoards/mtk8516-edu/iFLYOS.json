@@ -1,0 +1,9 @@
+{
+  "deviceID": "__DEVICE__ID__",
+  "clientID": "__CLIENT__ID__",
+  "caeResPath": "/data/iflyos/ivw/lanxiaofei.jet",
+  "dbPath":"/data/iflyos",
+  "bleName": "iflyOS-a01",
+  "soundDir": "/usr/share/iflyos/ring",
+  "clientSecret": "__CLIENT__SECRET__"
+}

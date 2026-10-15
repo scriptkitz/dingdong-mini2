@@ -1,0 +1,3 @@
+1.uart.jsruntime.patch 对应jsruntime
+2.uart.js.patch 对应smartSpeakerApp
+3.发送只是示例，具体如何发送根据自己需求参照patch修改
